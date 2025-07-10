@@ -1,15 +1,207 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Dashboard SIAGAM</title>
-  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="dashboard.css" />
+  <style>
+    /* --- Styling Global --- */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f6f9;
+    }
+
+    /* --- Navbar --- */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #2f3e46;
+      padding: 1rem 2rem;
+      color: white;
+      position: relative;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 24px;
+      background: none;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+      padding: 0;
+      margin: 0;
+    }
+
+    .nav-links li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    .nav-links li a:hover {
+      text-decoration: underline;
+    }
+
+    /* --- Kontainer Konten --- */
+    .container {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    }
+
+    .container h1 {
+      font-size: 2rem;
+      color: #333;
+    }
+
+    .container p {
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .card-wrapper {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: #ffffff;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card h3 {
+      margin: 0 0 0.5rem 0;
+      color: #2f3e46;
+    }
+
+    .card p {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #344e41;
+    }
+
+    /* --- Tombol Logout --- */
+    .logout-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #d00000;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      z-index: 1000;
+    }
+
+    .logout-btn:hover {
+      background-color: #a30000;
+    }
+
+    /* --- Loading Logout --- */
+    .logout-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 9999;
+    }
+
+    .logout-loader p {
+      margin-top: 16px;
+      font-size: 1.2rem;
+      color: #444;
+      font-weight: 500;
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 6px solid #ccc;
+      border-top: 6px solid #2f3e46;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* --- Mobile Responsive --- */
+    @media (max-width: 480px) {
+      .menu-toggle {
+        display: block;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        position: fixed;
+        top: 60px;
+        left: -220px;
+        width: 200px;
+        height: 100%;
+        background-color: #2f3e46;
+        padding-top: 1rem;
+        transition: left 0.3s ease-in-out;
+      }
+
+      .nav-links.show {
+        left: 0;
+      }
+
+      .nav-links li {
+        margin: 1rem 0;
+        padding-left: 1.5rem;
+      }
+    }
+  </style>
 </head>
 <body>
+
+  <!-- Navbar -->
   <nav class="navbar">
     <div class="logo">SIAGAM</div>
-    <ul class="nav-links">
+    <button class="menu-toggle" id="menuToggle">☰</button>
+    <ul class="nav-links" id="navLinks">
       <li><a href="#">DASHBOARD</a></li>
       <li><a href="#">AGENDA SURAT</a></li>
       <li><a href="#">BUAT SURAT</a></li>
@@ -17,11 +209,10 @@
     </ul>
   </nav>
 
+  <!-- Konten Utama -->
   <div class="container">
     <h1>Selamat Datang di Dashboard SIAGAM</h1>
-    <p>
-      Ini adalah aplikasi berbasis web yang dibangun berdasarkan fungsi utama membantu Pemerintah Gampong untuk menjaga administrasi secara online. Konten yang ditampilkan merupakan data dummy dan dapat diupdate setelah dilakukan negosiasi kerjasama bisnis antara penyedia jasa dan salah satu Pemerintah Gampong.
-    </p>
+    <p>Ini adalah aplikasi berbasis web yang dibangun untuk membantu Pemerintah Gampong dalam mengelola administrasi secara online.</p>
 
     <div class="card-wrapper">
       <div class="card">
@@ -38,23 +229,43 @@
       </div>
     </div>
   </div>
-  <!-- Tombol Logout Mengambang -->
-<button class="logout-btn" onclick="logout()">Logout</button>
 
-<script>
-  function logout() {
-    // Konfirmasi sebelum logout
-    if (confirm("Apakah Anda yakin ingin logout?")) {
-      // Arahkan ke halaman login atau landing
-      window.location.href = "index.html"; // Ganti dengan halaman login kamu
+  <!-- Tombol Logout -->
+  <button class="logout-btn" onclick="logout()">Logout</button>
+
+  <!-- Animasi Loading Logout -->
+  <div id="logoutLoader" class="logout-loader">
+    <div class="spinner"></div>
+    <p>Logging out...</p>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // Fungsi logout dengan animasi
+    function logout() {
+      if (confirm("Apakah Anda yakin ingin logout?")) {
+        document.getElementById("logoutLoader").style.display = "flex";
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 2000);
+      }
     }
-  }
-</script>
+
+    // Toggle menu sidebar mobile
+    document.addEventListener("DOMContentLoaded", function () {
+      const menuToggle = document.getElementById("menuToggle");
+      const navLinks = document.getElementById("navLinks");
+
+      menuToggle.addEventListener("click", function () {
+        navLinks.classList.toggle("show");
+      });
+
+      window.addEventListener("resize", function () {
+        if (window.innerWidth > 480) {
+          navLinks.classList.remove("show");
+        }
+      });
+    });
+  </script>
 </body>
 </html>
-
-<!-- Animasi Loading Logout -->
-<div id="logoutLoader" class="logout-loader">
-  <div class="spinner"></div>
-  <p>Logging out...</p>
-</div>
