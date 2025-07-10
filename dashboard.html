@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard SIAGAM</title>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">SIAGAM</div>
+    <ul class="nav-links">
+      <li><a href="#">DASHBOARD</a></li>
+      <li><a href="#">AGENDA SURAT</a></li>
+      <li><a href="#">BUAT SURAT</a></li>
+      <li><a href="#">DATA WARGA</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h1>Selamat Datang di Dashboard SIAGAM</h1>
+    <p>
+      Ini adalah aplikasi berbasis web yang dibangun berdasarkan fungsi utama membantu Pemerintah Gampong untuk menjaga administrasi secara online. Konten yang ditampilkan merupakan data dummy dan dapat diupdate setelah dilakukan negosiasi kerjasama bisnis antara penyedia jasa dan salah satu Pemerintah Gampong.
+    </p>
+
+    <div class="card-wrapper">
+      <div class="card">
+        <h3>Total Surat</h3>
+        <p>120 Surat</p>
+      </div>
+      <div class="card">
+        <h3>Agenda Hari Ini</h3>
+        <p>3 Kegiatan</p>
+      </div>
+      <div class="card">
+        <h3>Data Warga</h3>
+        <p>450 Jiwa</p>
+      </div>
+    </div>
+  </div>
+  <!-- Tombol Logout Mengambang -->
+<button class="logout-btn" onclick="logout()">Logout</button>
+
+<script>
+  function logout() {
+    // Konfirmasi sebelum logout
+    if (confirm("Apakah Anda yakin ingin logout?")) {
+      // Arahkan ke halaman login atau landing
+      window.location.href = "index.html"; // Ganti dengan halaman login kamu
+    }
+  }
+</script>
+</body>
+</html>
+
+<!-- Animasi Loading Logout -->
+<div id="logoutLoader" class="logout-loader">
+  <div class="spinner"></div>
+  <p>Logging out...</p>
+</div>
