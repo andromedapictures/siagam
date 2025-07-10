@@ -146,22 +146,43 @@ body {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-
+.menu-toggle {
+  display: none;
+  font-size: 24px;
+  background: none;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
 @media (max-width: 480px) {
-  .logo {
-    width: 120px;
+  .navbar {
+    flex-wrap: wrap;
   }
 
-  h1 {
-    font-size: 1.2rem;
+  .menu-toggle {
+    display: block;
   }
 
-  h2 {
-    font-size: 1rem;
+  .nav-links {
+    flex-direction: column;
+    position: fixed;
+    top: 60px;
+    left: -100%;
+    width: 200px;
+    background-color: #2f3e46;
+    height: 100%;
+    padding-top: 1rem;
+    transition: left 0.3s ease;
+    z-index: 999;
   }
 
-  button {
-    width: 100%;
-    font-size: 1rem;
+  .nav-links.show {
+    left: 0;
+  }
+
+  .nav-links li {
+    margin: 1rem 0;
+    text-align: left;
+    padding-left: 1rem;
   }
 }
